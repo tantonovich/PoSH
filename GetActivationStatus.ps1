@@ -1,5 +1,6 @@
 #USAGE:  Import-Module <filename to this script>.ps1
 #  Get-ActivationStatus <computername>
+#  ex.  Get-ADComputer -Filter * -SearchBase "CN=Computers,DC=subdomain,DC=domain,DC=com" | Get-ActivationStatus
 
 function Get-ActivationStatus {
 [CmdletBinding()]
