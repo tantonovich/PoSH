@@ -1,0 +1,18 @@
+#script will copy that file to the remote PC and run it for install.
+Import-Module ActiveDirectory
+#Modify the LDAP path to the OU where the domain computers are located.
+$list = Get-ADComputer -filter * -SearchBase "OU=corp,OU=agdc,DC=corp,DC=agdc,DC=us"
+#Run the script on all PC's that are online
+foreach ($computer in $list) {
+    $pc = $computer.name
+        Write-Host "Running Script for" $pc
+    $connectionTest = Test-Connection -ComputerName $pc -quiet
+    if ($connectionTest) {
+    #Modify the path below to the local directory on the server containing the PS script for the remote client install
+       Start-sleep 5
+    Invoke-Command -ComputerName $pc -ScriptBlock{gpupdate /force}
+          		 }
+      else {write-host "Client is Offline"
+      Write-Host "********************************"}
+    
+      }
